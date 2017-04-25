@@ -1,11 +1,11 @@
 /*
  * Copyright 2012-2014 eBay Software Foundation and selendroid committers.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License
  * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
  * or implied. See the License for the specific language governing permissions and limitations under
@@ -80,7 +80,17 @@ public class ProxyToDeviceHandler extends BaseSelendroidStandaloneHandler {
     JSONObject response = null;
 
     int retries = 3;
+    AndroidDevice device = session.getDevice();
     while (retries-- > 0) {
+      String instrumentationProcessOutput =
+        device.getInstrumentationProcessOutput();
+      if (instrumentationProcessOutput != null) {
+        return respondWithInstrumentationProcessFinished(
+          sessionId,
+          instrumentationProcessOutput
+        );
+      }
+
       try {
         response = proxyRequestToDevice(request, session, url, method);
         if (response == null) { // Unknown command
@@ -88,32 +98,31 @@ public class ProxyToDeviceHandler extends BaseSelendroidStandaloneHandler {
         }
         break;
       } catch (Exception e) {
-        if (retries == 0) {
-          AndroidDevice device = session.getDevice();
-
-          String crashMessage = device.getCrashLog();
-          if (!crashMessage.isEmpty()) {
-            return respondWithFailure(sessionId, new AppCrashedException(crashMessage));
-          }
-
-          if (device.isLoggingEnabled()) {
-            log.info("Failed to proxy request to the device, dumping logcat");
-            device.setVerbose();
-            for (LogEntry le : device.getLogs()) {
-              System.out.println(le.getMessage());
-            }
-          }
-
-          if (e instanceof SocketException) {
-            return respondWithServerOnDeviceUnreachable(sessionId, session.getDevice());
-          } else if (e instanceof NoHttpResponseException) {
-            return respondWithServerOnDeviceUnreachable(sessionId, session.getDevice());
-          } else {
-            return respondWithFailure(sessionId, new SelendroidException(
-                "Unexpected error communicating with selendroid server on the device", e));
-          }
-        } else {
+        if (retries > 0) {
           log.log(Level.SEVERE, "Failed to proxy request to Selendroid Server, retrying.", e);
+          continue;
+        }
+
+        String crashMessage = device.getCrashLog();
+        if (!crashMessage.isEmpty()) {
+          return respondWithFailure(sessionId, new AppCrashedException(crashMessage));
+        }
+
+        if (device.isLoggingEnabled()) {
+          log.info("Failed to proxy request to the device, dumping logcat");
+          device.setVerbose();
+          for (LogEntry le : device.getLogs()) {
+            System.out.println(le.getMessage());
+          }
+        }
+
+        if (e instanceof SocketException) {
+          return respondWithServerOnDeviceUnreachable(sessionId, device);
+        } else if (e instanceof NoHttpResponseException) {
+          return respondWithServerOnDeviceUnreachable(sessionId, device);
+        } else {
+          return respondWithFailure(sessionId, new SelendroidException(
+              "Unexpected error communicating with selendroid server on the device", e));
         }
       }
     }
@@ -128,6 +137,19 @@ public class ProxyToDeviceHandler extends BaseSelendroidStandaloneHandler {
     log.fine("return status from selendroid android server: " + statusCode);
 
     return new SelendroidResponse(sessionId, StatusCode.fromInteger(statusCode), value);
+  }
+
+  private SelendroidResponse respondWithInstrumentationProcessFinished(
+    String sessionId,
+    String instrumentationProcessOutput) throws JSONException {
+    String message =
+      "The instrumentation process has been terminated. This usually means " +
+      "that the app has been killed abruptly by the OS or that there was " +
+      "a native crash. See the output from the process below and/or check " +
+      "Logcat for more information:\n" +
+      instrumentationProcessOutput;
+
+    return respondWithFailure(sessionId, new SelendroidException(message));
   }
 
   /**
