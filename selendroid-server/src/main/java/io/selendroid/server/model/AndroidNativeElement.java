@@ -254,12 +254,21 @@ public class AndroidNativeElement implements AndroidElement {
   public void click() {
     waitUntilIsDisplayed();
     scrollIntoScreenIfNeeded();
-    try {
-      // is needed for recalculation of location
-      Thread.sleep(300);
-    } catch (InterruptedException e) {}
+    
     int[] xy = new int[2];
-    getView().getLocationOnScreen(xy);
+    int tries = 3;
+    while ((xy[0] <= 0 && xy[1] <= 0) && tries > 0) {
+      try {
+        // is needed for recalculation of location
+        Thread.sleep(300);
+      } catch (InterruptedException e) {}
+
+      getView().getLocationOnScreen(xy);
+      tries--;
+
+      SelendroidLogger.info(String.format("Trying to get view's coordinates, attempt %d", 4 - tries));
+    }
+
     final int viewWidth = getView().getWidth();
     final int viewHeight = getView().getHeight();
     final float x = xy[0] + (viewWidth / 2.0f);
