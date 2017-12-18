@@ -648,4 +648,8 @@ public class SelendroidStandaloneDriver implements ServerDetails {
   public void setEventListener(SelendroidStandaloneDriverEventListener eventListener) {
     this.eventListener = eventListener;
   }
+
+  private boolean deleteTmpFiles() {
+    return serverConfiguration != null && serverConfiguration.isDeleteTmpFiles();
+  }
 }
