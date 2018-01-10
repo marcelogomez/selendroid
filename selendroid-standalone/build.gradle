@@ -38,13 +38,16 @@ jar {
 
     // Version from manifest attributes will be retrieved while building selendroid-server apk
     manifest {
-        attributes('Main-Class': "$mainClassName", 'version': version)
+        attributes(
+          'Main-Class': "$mainClassName",
+          'Implementation-Version': version,
+          'version': version)
     }
 
     into('prebuild') {
         from {
-            ['../selendroid-server/build/outputs/apk/selendroid-server-' + rootProject.ext.selVersion + '.apk',
-             '../android-driver/build/outputs/apk/android-driver-app-' + rootProject.ext.selVersion + '.apk']
+            ['../selendroid-server/build/outputs/apk/selendroid-server-' + version + '.apk',
+             '../android-driver/build/outputs/apk/android-driver-app-' + version + '.apk']
         }
     }
 
@@ -54,6 +57,7 @@ jar {
     }
     from {
         ['./AndroidManifestTemplate.xml',
+         './BetterAndroidManifestTemplate.xml',
          '../README.md']
     }
 }
@@ -65,13 +69,16 @@ task jarWithoutDependencies(type: Jar) {
 
   // Version from manifest attributes will be retrieved while building selendroid-server apk
   manifest {
-      attributes('Main-Class': "$mainClassName", 'version': version)
+      attributes(
+        'Main-Class': "$mainClassName",
+        'Implementation-Version': version,
+        'version': version)
   }
 
   into('prebuild') {
       from {
-          ['../selendroid-server/build/outputs/apk/selendroid-server-' + rootProject.ext.selVersion + '.apk',
-           '../android-driver/build/outputs/apk/android-driver-app-' + rootProject.ext.selVersion + '.apk']
+          ['../selendroid-server/build/outputs/apk/selendroid-server-' + version + '.apk',
+           '../android-driver/build/outputs/apk/android-driver-app-' + version + '.apk']
       }
   }
 
@@ -80,6 +87,7 @@ task jarWithoutDependencies(type: Jar) {
   from sourceSets.main.output
   from {
       ['./AndroidManifestTemplate.xml',
+       './BetterAndroidManifestTemplate.xml',
        '../README.md']
   }
 }

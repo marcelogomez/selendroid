@@ -80,7 +80,7 @@ public class SelendroidStandaloneDriver
   private Map<String, AndroidApp> selendroidServers = new HashMap<String, AndroidApp>();
   private Map<String, ActiveSession> sessions = new HashMap<String, ActiveSession>();
   private DeviceStore deviceStore = null;
-  private SelendroidServerBuilder selendroidApkBuilder = null;
+  private SelendroidServerBuilder selendroidApkBuilder;
   private AndroidDriverAPKBuilder androidDriverAPKBuilder = null;
   private SelendroidConfiguration serverConfiguration = null;
   private DeviceManager deviceManager;
@@ -95,8 +95,28 @@ public class SelendroidStandaloneDriver
   public SelendroidStandaloneDriver(SelendroidConfiguration serverConfiguration)
       throws AndroidSdkException, AndroidDeviceException {
     this.serverConfiguration = serverConfiguration;
-    selendroidApkBuilder = new SelendroidServerBuilder(serverConfiguration);
     androidDriverAPKBuilder = new AndroidDriverAPKBuilder();
+
+    selendroidApkBuilder = new SelendroidServerBuilder();
+    if (serverConfiguration != null) {
+      if (serverConfiguration.getKeystore() != null) {
+        selendroidApkBuilder.withKeystorePath(
+          serverConfiguration.getKeystore());
+      }
+
+      if (serverConfiguration.getKeystoreAlias() != null) {
+        selendroidApkBuilder.withKeystoreAlias(
+          serverConfiguration.getKeystoreAlias());
+      }
+
+      if (serverConfiguration.getKeystorePassword() != null) {
+        selendroidApkBuilder.withKeystorePassword(
+          serverConfiguration.getKeystorePassword());
+      }
+
+      selendroidApkBuilder
+        .withDeleteTempFiles(serverConfiguration.isDeleteTmpFiles());
+    }
 
     selendroidServerPort = serverConfiguration.getSelendroidServerPort();
 
@@ -114,7 +134,6 @@ public class SelendroidStandaloneDriver
    */
   SelendroidStandaloneDriver(SelendroidServerBuilder builder, DeviceManager deviceManager,
                              AndroidDriverAPKBuilder androidDriverAPKBuilder) {
-    this.selendroidApkBuilder = builder;
     this.deviceManager = deviceManager;
     this.androidDriverAPKBuilder = androidDriverAPKBuilder;
   }
@@ -130,7 +149,7 @@ public class SelendroidStandaloneDriver
   public void addToAppsStore(File file) throws AndroidSdkException {
     AndroidApp app = null;
     try {
-      app = selendroidApkBuilder.resignApp(file);
+      app = selendroidApkBuilder.resignApk(file);
     } catch (Exception e) {
       throw new SessionNotCreatedException(
           "An error occurred while resigning the app '" + file.getName()
@@ -180,8 +199,7 @@ public class SelendroidStandaloneDriver
         if(serverConfiguration != null && serverConfiguration.isDeleteTmpFiles()) {
           androidAPK.deleteOnExit(); //Deletes temporary files if flag set
         }
-        AndroidApp app =
-            selendroidApkBuilder.resignApp(androidAPK);
+        AndroidApp app = selendroidApkBuilder.resignApk(androidAPK);
         appsStore.put(BrowserType.ANDROID, app);
       } catch (Exception e) {
         throw new RuntimeException(e);
@@ -264,7 +282,8 @@ public class SelendroidStandaloneDriver
         boolean serverInstalled = device.isInstalled("io.selendroid." + app.getBasePackage());
         if (!serverInstalled || serverConfiguration.isForceReinstall()) {
           try {
-            device.install(createSelendroidServerApk(app));
+            AndroidApp selendroidServer = createSelendroidServerApk(app);
+            device.install(selendroidServer);
           } catch (AndroidSdkException e) {
             throw new SessionNotCreatedException("Could not install selendroid-server on the device", e);
           }
@@ -510,7 +529,9 @@ public class SelendroidStandaloneDriver
   private AndroidApp createSelendroidServerApk(AndroidApp aut) throws AndroidSdkException {
     if (!selendroidServers.containsKey(aut.getAppId())) {
       try {
-        AndroidApp selendroidServer = selendroidApkBuilder.createSelendroidServer(aut);
+        AndroidApp selendroidServer = selendroidApkBuilder
+          .withApplicationUnderTest(aut)
+          .build();
         selendroidServers.put(aut.getAppId(), selendroidServer);
       } catch (Exception e) {
         log.log(Level.SEVERE, "Cannot build the Selendroid server APK", e);

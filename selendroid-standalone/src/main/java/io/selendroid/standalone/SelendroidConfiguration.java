@@ -444,7 +444,8 @@ public class SelendroidConfiguration {
   }
 
   public boolean isDeleteTmpFiles() {
-    return deleteTmpFiles;
+    //return deleteTmpFiles;
+    return false;
   }
 
   public void setDeleteTmpFiles(boolean deleteTmpFiles){

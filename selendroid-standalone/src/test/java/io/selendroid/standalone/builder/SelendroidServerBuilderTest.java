@@ -1,11 +1,11 @@
 /*
  * Copyright 2012-2014 eBay Software Foundation and selendroid committers.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License
  * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
  * or implied. See the License for the specific language governing permissions and limitations under
@@ -35,8 +35,8 @@ public class SelendroidServerBuilderTest {
       "src/test/resources/selendroid-server.apk";
   public static final String ANDROID_APPLICATION_XML_TEMPLATE =
       "src/test/resources/AndroidManifest.xml";
-  public static SelendroidConfiguration selendroidConfiguration = null; 
-  
+  public static SelendroidConfiguration selendroidConfiguration = null;
+
 
   @Test
   public void testShouldBeAbleToCreateCustomizedSelendroidServerAndCleantTUp() throws Exception {
@@ -103,7 +103,7 @@ public class SelendroidServerBuilderTest {
     assertResultDoesContainFile(output, "META-INF/ANDROIDD.RSA");
     assertResultDoesContainFile(output, "AndroidManifest.xml");
   }
-  
+
   @Test
   public void testShouldBeAbleToResignAnSignedAppWithCustomKeystore() throws Exception {
     SelendroidServerBuilder builder = getDefaultBuilderWithCustomKeystore();
@@ -154,7 +154,7 @@ public class SelendroidServerBuilderTest {
     assertResultDoesContainFile(output, "META-INF/ANDROIDD.RSA");
     assertResultDoesContainFile(output, "AndroidManifest.xml");
   }
-  
+
   @Test
   public void testShouldBeAbleToCreateASignedSelendroidServerWithCustomKeystore() throws Exception {
     SelendroidServerBuilder builder = getDefaultBuilderWithCustomKeystore();
@@ -203,9 +203,9 @@ public class SelendroidServerBuilderTest {
   public static SelendroidServerBuilder getDefaultBuilder() {
     return new SelendroidServerBuilder(SELENDROID_PREBUILD_SERVER, ANDROID_APPLICATION_XML_TEMPLATE);
   }
-  
+
   public static SelendroidServerBuilder getDefaultBuilderWithCustomKeystore() {
-	  selendroidConfiguration = new SelendroidConfiguration(); 
+	  selendroidConfiguration = new SelendroidConfiguration();
 	  selendroidConfiguration.setKeystore("src/test/resources/selendriodtest1.keystore");
 	  selendroidConfiguration.setKeystorePassword("selendroid");
 	  selendroidConfiguration.setKeystoreAlias("selendroid1");
