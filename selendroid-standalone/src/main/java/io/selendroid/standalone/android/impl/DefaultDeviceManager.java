@@ -18,7 +18,7 @@ import com.android.ddmlib.AndroidDebugBridge.IDeviceChangeListener;
 import com.android.ddmlib.IDevice;
 import io.selendroid.standalone.android.*;
 import io.selendroid.standalone.exceptions.AndroidDeviceException;
-import io.selendroid.standalone.exceptions.DeviceOfflineException;
+import io.selendroid.common.exceptions.DeviceOfflineException;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -19,7 +19,7 @@ import com.android.internal.util.Predicate;
 import io.selendroid.server.ServerInstrumentation;
 import io.selendroid.server.android.KeySender;
 import io.selendroid.server.android.ViewHierarchyAnalyzer;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.server.common.exceptions.UnsupportedOperationException;
 import io.selendroid.server.model.*;
 import io.selendroid.server.model.By.*;

@@ -11,18 +11,16 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package io.selendroid.standalone.builder;
+package io.selendroid.server.builder;
 
-import io.selendroid.server.common.exceptions.SelendroidException;
-import io.selendroid.standalone.SelendroidConfiguration;
-import io.selendroid.standalone.android.AndroidApp;
-import io.selendroid.standalone.android.AndroidSdk;
-import io.selendroid.standalone.android.JavaSdk;
-import io.selendroid.standalone.android.impl.DefaultAndroidApp;
-import io.selendroid.standalone.exceptions.AndroidSdkException;
-import io.selendroid.standalone.exceptions.ShellCommandException;
-import io.selendroid.standalone.io.ShellCommand;
-import io.selendroid.standalone.server.model.SelendroidStandaloneDriver;
+import io.selendroid.common.JavaSdk;
+import io.selendroid.common.exceptions.SelendroidException;
+import io.selendroid.common.android.AndroidApp;
+import io.selendroid.common.android.AndroidSdk;
+import io.selendroid.common.android.DefaultAndroidApp;
+import io.selendroid.common.exceptions.AndroidSdkException;
+import io.selendroid.common.exceptions.ShellCommandException;
+import io.selendroid.common.ShellCommand;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 import org.apache.commons.compress.archivers.zip.ZipFile;
@@ -68,7 +66,9 @@ public class SelendroidServerBuilder {
   private String keystoreAlias = "androiddebugkey";
   private String keystorePassword = "android";
 
-  private String manifestTemplate = DEFAULT_MANIFEST_TEMPLATE;
+  // These are only customizable for testing
+  private String prebuildServerPath=  PREBUILD_SELENDROID_SERVER_PATH;
+  private String manifestTemplatePath = DEFAULT_MANIFEST_TEMPLATE;
 
   public AndroidApp build()
     throws AndroidSdkException, FileNotFoundException, IOException {
@@ -76,21 +76,7 @@ public class SelendroidServerBuilder {
       throw new IllegalStateException("Application under test required");
     }
 
-    // Copy template from prebuild
-    File customizedServer = createTempFile("selendroid-server", ".apk");
-    log.info(
-      "Creating customized Selendroid-server: " + customizedServer.getAbsolutePath());
-    InputStream is = getResourceAsStream(PREBUILD_SELENDROID_SERVER_PATH);
-    IOUtils.copy(is, new FileOutputStream(customizedServer));
-    IOUtils.closeQuietly(is);
-
-    // Clean up APK from pebuild
-    AndroidApp selendroidServer = new DefaultAndroidApp(customizedServer);
-    selendroidServer.deleteFileFromWithinApk("META-INF/CERT.RSA");
-    selendroidServer.deleteFileFromWithinApk("META-INF/CERT.SF");
-    selendroidServer.deleteFileFromWithinApk("AndroidManifest.xml");
-
-    File customizedApk = createSelendroidServerApk(selendroidServer);
+    File customizedApk = createSelendroidServerApk();
 
     if (outputFile == null) {
       outputFile = createTempFile(
@@ -130,9 +116,19 @@ public class SelendroidServerBuilder {
     }
   }
 
-  private File createSelendroidServerApk(
-    AndroidApp selendroidServer)
+  /*private*/ File createSelendroidServerApk()
     throws IOException, ShellCommandException, AndroidSdkException {
+    // Copy sample prebuild APK
+    File customizedServer = copyPrebuildServerApk();
+    log.info(
+      "Creating customized Selendroid-server: " + customizedServer.getAbsolutePath());
+
+    // Clean up APK from pebuild, delete files from Gradle signing
+    AndroidApp selendroidServer = new DefaultAndroidApp(customizedServer);
+    selendroidServer.deleteFileFromWithinApk("META-INF/CERT.RSA");
+    selendroidServer.deleteFileFromWithinApk("META-INF/CERT.SF");
+    selendroidServer.deleteFileFromWithinApk("AndroidManifest.xml");
+
     File manifestApkFile = createTempFile("manifest", ".apk");
     File customizedManifest = createCustomManifest();
 
@@ -150,9 +146,7 @@ public class SelendroidServerBuilder {
 
     ZipFile manifestApk = new ZipFile(manifestApkFile);
     ZipArchiveEntry binaryManifestXml = manifestApk.getEntry("AndroidManifest.xml");
-
     File finalSelendroidServerFile = createTempFile("selendroid-server", ".apk");
-
     ZipArchiveOutputStream finalSelendroidServer =
         new ZipArchiveOutputStream(finalSelendroidServerFile);
     finalSelendroidServer.putArchiveEntry(binaryManifestXml);
@@ -176,8 +170,7 @@ public class SelendroidServerBuilder {
 
   // TODO: Use a library or something for building the XML file
   private File createCustomManifest() throws IOException, AndroidSdkException {
-    File tmpDir = createTempDir();
-    File customizedManifest = createTempFile(tmpDir, "AndroidManifest.xml");
+    File customizedManifest = createTempFile("AndroidManifest" , ".xml");
     log.info(
       String.format(
         "Adding target package '%s' to %s",
@@ -185,7 +178,7 @@ public class SelendroidServerBuilder {
         customizedManifest.getAbsolutePath()
       ));
 
-    InputStream inputStream = getResourceAsStream(manifestTemplate);
+    InputStream inputStream = getResourceAsStream(manifestTemplatePath);
     OutputStream outputStream = new FileOutputStream(customizedManifest);
     String content = IOUtils.toString(inputStream, Charset.defaultCharset().displayName());
 
@@ -201,17 +194,27 @@ public class SelendroidServerBuilder {
     return customizedManifest;
   }
 
+  private final File copyPrebuildServerApk() throws IOException {
+    File customizedServer = createTempFile("selendroid-server", ".apk");
+    InputStream is = getResourceAsStream(prebuildServerPath);
+    IOUtils.copy(is, new FileOutputStream(customizedServer));
+    IOUtils.closeQuietly(is);
+
+    return customizedServer;
+  }
+
   private InputStream getResourceAsStream(String resource) {
-    InputStream is = getClass().getResourceAsStream(resource);
+    InputStream is = getClass().getClassLoader().getResourceAsStream(resource);
 
     if (is == null) {
-      throw new SelendroidException("The resource '" + resource + "' was not found.");
+      String pwd = ShellCommand.exec(new CommandLine("pwd"));
+      throw new SelendroidException("The resource '" + resource + "' was not found. " + pwd);
     }
 
     return is;
   }
 
-  private AndroidApp signApk(
+  /* private */AndroidApp signApk(
     File customApk,
     File output) throws AndroidSdkException {
     log.info(String.format("Signing APK %s", customApk.toString()));
@@ -261,6 +264,9 @@ public class SelendroidServerBuilder {
   }
 
   public static String getJarVersionNumber() {
+    if (true) {
+      return "0.18.1";
+    }
     return SelendroidServerBuilder
       .class
       .getPackage()
@@ -297,9 +303,15 @@ public class SelendroidServerBuilder {
     return this;
   }
 
-  public SelendroidServerBuilder withManifestTemplate(
-    String manifestTemplate) {
-    this.manifestTemplate = manifestTemplate;
+  public SelendroidServerBuilder withManifestTemplatePath(
+    String manifestTemplatePath) {
+    this.manifestTemplatePath = manifestTemplatePath;
+    return this;
+  }
+
+  public SelendroidServerBuilder withPrebuildServerPath(
+    String prebuildServerPath) {
+    this.prebuildServerPath = prebuildServerPath;
     return this;
   }
 
@@ -311,25 +323,5 @@ public class SelendroidServerBuilder {
     }
 
     return tempFile;
-  }
-
-  private File createTempFile(File dir, String name) throws IOException {
-    File tempFile = new File(dir, name);
-
-    if (deleteTempFiles) {
-      tempFile.deleteOnExit();
-    }
-
-    return tempFile;
-  }
-
-  private File createTempDir() throws IOException {
-    File tempDir = Files.createTempDir();
-
-    if (deleteTempFiles) {
-      tempDir.deleteOnExit();
-    }
-
-    return tempDir;
   }
 }

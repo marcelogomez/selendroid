@@ -15,7 +15,7 @@ package io.selendroid.server;
 
 import io.netty.handler.codec.http.HttpMethod;
 import io.selendroid.server.ServerInstrumentation;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.server.handlers.SessionAndIdExtractionTestHandler;
 import io.selendroid.server.handlers.SessionAndPayloadExtractionTestHandler;
 import io.selendroid.server.internal.Capabilities;

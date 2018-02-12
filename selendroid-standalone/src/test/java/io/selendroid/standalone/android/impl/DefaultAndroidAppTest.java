@@ -18,9 +18,9 @@ import java.io.File;
 import org.junit.Assert;
 import org.junit.Test;
 
-import io.selendroid.server.common.exceptions.SelendroidException;
-import io.selendroid.standalone.android.AndroidApp;
-import io.selendroid.standalone.android.impl.DefaultAndroidApp;
+import io.selendroid.common.exceptions.SelendroidException;
+import io.selendroid.common.android.AndroidApp;
+import io.selendroid.common.android.DefaultAndroidApp;
 
 public class DefaultAndroidAppTest {
   private static final String APK_FILE = "src/test/resources/selendroid-test-app.apk";

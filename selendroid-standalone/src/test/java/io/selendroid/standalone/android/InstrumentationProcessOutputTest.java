@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 
 import io.selendroid.standalone.android.impl.DefaultAndroidEmulator;
 import io.selendroid.server.common.exceptions.AppCrashedException;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 
 public class InstrumentationProcessOutputTest {
   @Test

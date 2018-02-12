@@ -11,14 +11,14 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package io.selendroid.standalone.android.impl;
+package io.selendroid.common.android;
 
-import io.selendroid.server.common.exceptions.SelendroidException;
-import io.selendroid.standalone.android.AndroidApp;
-import io.selendroid.standalone.android.AndroidSdk;
-import io.selendroid.standalone.exceptions.AndroidSdkException;
-import io.selendroid.standalone.exceptions.ShellCommandException;
-import io.selendroid.standalone.io.ShellCommand;
+import io.selendroid.common.exceptions.SelendroidException;
+import io.selendroid.common.android.AndroidApp;
+import io.selendroid.common.android.AndroidSdk;
+import io.selendroid.common.exceptions.AndroidSdkException;
+import io.selendroid.common.exceptions.ShellCommandException;
+import io.selendroid.common.ShellCommand;
 
 import java.io.File;
 import java.util.regex.Matcher;

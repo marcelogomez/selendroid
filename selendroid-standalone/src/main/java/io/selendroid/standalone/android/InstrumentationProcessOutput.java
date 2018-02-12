@@ -19,7 +19,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.FluentWait;
 
 import io.selendroid.server.common.exceptions.AppCrashedException;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

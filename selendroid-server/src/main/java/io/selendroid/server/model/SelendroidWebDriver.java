@@ -23,7 +23,7 @@ import android.webkit.*;
 import io.selendroid.server.ServerInstrumentation;
 import io.selendroid.server.android.*;
 import io.selendroid.server.android.internal.DomWindow;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.server.common.exceptions.StaleElementReferenceException;
 import io.selendroid.server.common.exceptions.TimeoutException;
 import io.selendroid.server.model.internal.WebViewHandleMapper;

@@ -16,7 +16,7 @@ package io.selendroid.server;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.os.Handler;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.server.util.SelendroidLogger;
 
 public class JUnitRunnerServerInstrumentation extends DefaultServerInstrumentation {

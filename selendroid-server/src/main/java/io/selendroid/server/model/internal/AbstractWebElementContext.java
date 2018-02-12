@@ -13,7 +13,7 @@
  */
 package io.selendroid.server.model.internal;
 
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.server.model.AndroidElement;
 import io.selendroid.server.model.AndroidWebElement;
 import io.selendroid.server.model.By;

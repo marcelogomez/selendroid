@@ -13,6 +13,8 @@
  */
 package io.selendroid.server.common.exceptions;
 
+import io.selendroid.common.exceptions.SelendroidException;
+
 /**
  * Thrown when an unhandled exception in the app under test was detected.
  */

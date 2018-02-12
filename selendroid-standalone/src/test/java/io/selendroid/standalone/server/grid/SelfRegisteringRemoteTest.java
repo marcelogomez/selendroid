@@ -13,7 +13,7 @@
  */
 package io.selendroid.standalone.server.grid;
 
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.standalone.SelendroidConfiguration;
 import io.selendroid.standalone.server.model.SelendroidStandaloneDriver;
 import org.apache.http.HttpEntity;

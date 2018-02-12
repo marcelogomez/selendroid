@@ -29,7 +29,7 @@ import android.view.View;
 import io.selendroid.server.android.ActivitiesReporter;
 import io.selendroid.server.android.AndroidWait;
 import io.selendroid.server.common.exceptions.PermissionDeniedException;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.server.common.utils.CallLogEntry;
 import io.selendroid.server.extension.ExtensionLoader;
 import io.selendroid.server.model.ExternalStorage;

@@ -24,8 +24,8 @@ import com.google.common.collect.Lists;
 
 import io.selendroid.common.SelendroidCapabilities;
 import io.selendroid.common.device.DeviceTargetPlatform;
-import io.selendroid.server.common.exceptions.SelendroidException;
-import io.selendroid.standalone.android.AndroidApp;
+import io.selendroid.common.exceptions.SelendroidException;
+import io.selendroid.common.android.AndroidApp;
 import io.selendroid.standalone.android.AndroidDevice;
 import io.selendroid.standalone.android.AndroidEmulator;
 import io.selendroid.standalone.android.AndroidEmulatorPowerStateListener;
@@ -35,7 +35,7 @@ import io.selendroid.standalone.android.impl.DefaultAndroidEmulator;
 import io.selendroid.standalone.android.impl.DefaultHardwareDevice;
 import io.selendroid.standalone.android.impl.InstalledAndroidApp;
 import io.selendroid.standalone.exceptions.AndroidDeviceException;
-import io.selendroid.standalone.exceptions.AndroidSdkException;
+import io.selendroid.common.exceptions.AndroidSdkException;
 import io.selendroid.standalone.exceptions.DeviceStoreException;
 import io.selendroid.standalone.server.model.impl.DefaultPortFinder;
 

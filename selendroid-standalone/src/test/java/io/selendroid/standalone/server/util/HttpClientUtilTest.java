@@ -38,7 +38,7 @@ public class HttpClientUtilTest extends TestCase {
     }
 
     public void testParseJsonResponseThrowsException() throws Exception {
-        InputStream inputStream = IOUtils.toInputStream("{{{ 'id' :;; 5, 'name' ? 'kitkat' }");
+        InputStream inputStream = IOUtils.toInputStream("{{{ 'id' :; 5, 'name' ? 'kitkat' }");
 
         HttpEntity httpEntity = mock(HttpEntity.class);
         when(httpEntity.getContent()).thenReturn(inputStream);

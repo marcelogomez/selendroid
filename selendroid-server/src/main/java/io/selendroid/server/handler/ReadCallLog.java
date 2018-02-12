@@ -16,7 +16,7 @@ package io.selendroid.server.handler;
 import io.selendroid.server.common.Response;
 import io.selendroid.server.common.SelendroidResponse;
 import io.selendroid.server.common.exceptions.PermissionDeniedException;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.server.common.http.HttpRequest;
 import io.selendroid.server.common.utils.CallLogEntry;
 import io.selendroid.server.model.DefaultSelendroidDriver;

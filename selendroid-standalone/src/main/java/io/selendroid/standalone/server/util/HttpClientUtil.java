@@ -18,7 +18,7 @@ import io.netty.handler.codec.http.HttpMethod;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;

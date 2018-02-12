@@ -13,9 +13,9 @@
  */
 package io.selendroid.standalone.android.impl;
 
-import io.selendroid.standalone.android.AndroidApp;
-import io.selendroid.standalone.exceptions.AndroidSdkException;
-import io.selendroid.standalone.exceptions.ShellCommandException;
+import io.selendroid.common.android.AndroidApp;
+import io.selendroid.common.exceptions.AndroidSdkException;
+import io.selendroid.common.exceptions.ShellCommandException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

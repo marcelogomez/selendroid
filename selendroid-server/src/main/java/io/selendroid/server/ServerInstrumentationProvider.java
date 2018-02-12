@@ -15,7 +15,7 @@ package io.selendroid.server;
 
 import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 
 public class ServerInstrumentationProvider {
     public static ServerInstrumentation getServerInstrumentationInstance() {

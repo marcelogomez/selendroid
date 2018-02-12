@@ -17,7 +17,7 @@ import io.selendroid.server.common.StatusServlet;
 import io.selendroid.server.common.http.HttpServer;
 import io.selendroid.standalone.SelendroidConfiguration;
 import io.selendroid.standalone.exceptions.AndroidDeviceException;
-import io.selendroid.standalone.exceptions.AndroidSdkException;
+import io.selendroid.common.exceptions.AndroidSdkException;
 import io.selendroid.standalone.server.grid.SelfRegisteringRemote;
 import io.selendroid.standalone.server.model.SelendroidStandaloneDriver;
 

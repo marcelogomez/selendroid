@@ -17,7 +17,7 @@ import io.selendroid.server.android.internal.Dimension;
 import io.selendroid.server.android.internal.Point;
 import io.selendroid.server.common.exceptions.ElementNotVisibleException;
 import io.selendroid.server.common.exceptions.NoSuchElementException;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.server.model.interactions.AndroidCoordinates;
 import io.selendroid.server.model.interactions.Coordinates;
 import io.selendroid.server.model.internal.AbstractWebElementContext;

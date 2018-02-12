@@ -11,20 +11,20 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package io.selendroid.standalone.android;
+package io.selendroid.common;
 
 public class OS {
   public static boolean isWindows() {
     return System.getProperty("os.name").toLowerCase().indexOf("win") >= 0;
   }
 
-  /* package */static String platformExecutableSuffixExe() {
+  public static String platformExecutableSuffixExe() {
     return isWindows() ? ".exe" : "";
   }
 
 
 
-  /* package */static String platformExecutableSuffixBat() {
+  public static String platformExecutableSuffixBat() {
     return isWindows() ? ".bat" : "";
   }
 }

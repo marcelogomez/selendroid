@@ -13,7 +13,7 @@
  */
 package io.selendroid.server.inspector;
 
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 
 public class SeledroidInspectorException extends SelendroidException {
   private static final long serialVersionUID = 6848294719850875948L;

@@ -11,20 +11,20 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package io.selendroid.server.common.exceptions;
+package io.selendroid.common.exceptions;
 
-public class SelendroidException extends RuntimeException {
-  private static final long serialVersionUID = -1592305571101012889L;
+public class AndroidSdkException extends Exception {
+  private static final long serialVersionUID = 5431510243540521938L;
 
-  public SelendroidException(String message) {
+  public AndroidSdkException(String message) {
     super(message);
   }
 
-  public SelendroidException(Throwable t) {
+  public AndroidSdkException(Throwable t) {
     super(t);
   }
 
-  public SelendroidException(String message, Throwable t) {
+  public AndroidSdkException(String message, Throwable t) {
     super(message, t);
   }
 }

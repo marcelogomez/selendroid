@@ -11,10 +11,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package io.selendroid.standalone.android;
+package io.selendroid.common.android;
 
-import io.selendroid.standalone.exceptions.AndroidSdkException;
-import io.selendroid.standalone.exceptions.ShellCommandException;
+import io.selendroid.common.exceptions.AndroidSdkException;
+import io.selendroid.common.exceptions.ShellCommandException;
 
 public interface AndroidApp {
 

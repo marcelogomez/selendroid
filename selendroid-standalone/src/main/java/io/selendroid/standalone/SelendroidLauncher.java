@@ -24,8 +24,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import io.selendroid.standalone.android.AndroidSdk;
-import io.selendroid.standalone.exceptions.AndroidSdkException;
+import io.selendroid.common.android.AndroidSdk;
+import io.selendroid.common.exceptions.AndroidSdkException;
 import io.selendroid.standalone.log.LogLevelEnum;
 import io.selendroid.standalone.server.SelendroidStandaloneServer;
 import io.selendroid.standalone.server.util.HttpClientUtil;
@@ -111,7 +111,7 @@ public class SelendroidLauncher {
 
   /**
    * Starts the Selendroid standalone server and waits until it's ready to accept requests.
-   * @throws io.selendroid.server.common.exceptions.SelendroidException if the server didn't come up
+   * @throws io.selendroid.common.exceptions.SelendroidException if the server didn't come up
    */
   public void launchSelendroid() {
     launchServer();

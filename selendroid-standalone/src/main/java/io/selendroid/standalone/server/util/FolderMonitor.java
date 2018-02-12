@@ -15,7 +15,7 @@
 package io.selendroid.standalone.server.util;
 
 import io.selendroid.standalone.SelendroidConfiguration;
-import io.selendroid.standalone.exceptions.AndroidSdkException;
+import io.selendroid.common.exceptions.AndroidSdkException;
 import io.selendroid.standalone.server.model.SelendroidStandaloneDriver;
 
 import java.io.File;

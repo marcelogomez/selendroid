@@ -14,7 +14,7 @@
 package io.selendroid.server.inspector.view;
 
 import io.selendroid.server.ServerInstrumentation;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.server.common.http.HttpRequest;
 import io.selendroid.server.common.http.HttpResponse;
 import io.selendroid.server.inspector.SelendroidInspectorView;

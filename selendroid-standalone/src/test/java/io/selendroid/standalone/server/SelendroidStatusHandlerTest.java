@@ -17,7 +17,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import io.netty.handler.codec.http.HttpMethod;
 import io.selendroid.standalone.SelendroidConfiguration;
-import io.selendroid.standalone.exceptions.AndroidSdkException;
+import io.selendroid.common.exceptions.AndroidSdkException;
 import io.selendroid.standalone.server.model.SelendroidStandaloneDriver;
 import io.selendroid.standalone.server.util.HttpClientUtil;
 import io.selendroid.standalone.util.SelendroidAssert;

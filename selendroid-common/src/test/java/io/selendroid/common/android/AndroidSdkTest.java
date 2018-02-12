@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package io.selendroid.standalone.android;
+package io.selendroid.common.android;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,7 +19,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.FileFilter;
 
-import io.selendroid.standalone.android.AndroidSdk;
+import io.selendroid.common.android.AndroidSdk;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;

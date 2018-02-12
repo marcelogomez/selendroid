@@ -25,10 +25,10 @@ import java.io.File;
 
 import io.netty.handler.codec.http.HttpMethod;
 import io.selendroid.common.SelendroidCapabilities;
-import io.selendroid.standalone.android.AndroidApp;
+import io.selendroid.common.android.AndroidApp;
 import io.selendroid.standalone.android.AndroidDevice;
-import io.selendroid.standalone.android.AndroidSdk;
-import io.selendroid.standalone.io.ShellCommand;
+import io.selendroid.common.android.AndroidSdk;
+import io.selendroid.common.ShellCommand;
 import io.selendroid.standalone.server.util.HttpClientUtil;
 import io.selendroid.standalone.util.SelendroidAssert;
 

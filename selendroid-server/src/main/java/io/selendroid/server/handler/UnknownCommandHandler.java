@@ -18,7 +18,7 @@ import org.json.JSONException;
 import io.selendroid.server.common.Response;
 import io.selendroid.server.common.SelendroidResponse;
 import io.selendroid.server.common.StatusCode;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.server.common.http.HttpRequest;
 
 public class UnknownCommandHandler extends SafeRequestHandler {

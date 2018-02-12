@@ -17,7 +17,7 @@ import android.app.Instrumentation;
 import android.content.Context;
 import dalvik.system.DexClassLoader;
 import io.selendroid.server.common.BaseRequestHandler;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.server.util.SelendroidLogger;
 
 import java.io.File;

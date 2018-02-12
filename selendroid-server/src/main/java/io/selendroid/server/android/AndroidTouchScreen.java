@@ -36,7 +36,7 @@ import io.selendroid.server.model.interactions.Coordinates;
 import io.selendroid.server.util.SelendroidLogger;
 import io.selendroid.server.android.internal.Point;
 import io.selendroid.server.common.action.touch.FlickDirection;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

@@ -14,7 +14,7 @@
 
 package io.selendroid.server.android;
 
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import android.view.KeyEvent;
 
 /**

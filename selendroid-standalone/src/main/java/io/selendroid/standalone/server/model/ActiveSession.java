@@ -14,7 +14,7 @@
 package io.selendroid.standalone.server.model;
 
 import io.selendroid.common.SelendroidCapabilities;
-import io.selendroid.standalone.android.AndroidApp;
+import io.selendroid.common.android.AndroidApp;
 import io.selendroid.standalone.android.AndroidDevice;
 import io.selendroid.standalone.android.InstrumentationProcessListener;
 

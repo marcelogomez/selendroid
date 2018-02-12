@@ -22,7 +22,7 @@ import io.selendroid.server.common.Response;
 import io.selendroid.server.common.SelendroidResponse;
 import io.selendroid.server.common.StatusCode;
 import io.selendroid.server.common.exceptions.AppCrashedException;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.server.common.http.HttpRequest;
 import io.selendroid.standalone.android.AndroidDevice;
 import io.selendroid.standalone.android.InstrumentationProcessOutput;
@@ -58,8 +58,10 @@ public class ProxyToDeviceHandler extends BaseSelendroidStandaloneHandler {
   }
 
   @Override
-  public Response handleRequest(HttpRequest request, JSONObject payload) throws JSONException {
-    String sessionId = getSessionId(request);
+  public Response handleRequest(
+    final HttpRequest request,
+    final JSONObject payload) throws JSONException {
+    final String sessionId = getSessionId(request);
 
     if (sessionId == null || sessionId.isEmpty()) {
       String dataKeys = Joiner.on(", ").join(request.data().keySet());
@@ -82,10 +84,9 @@ public class ProxyToDeviceHandler extends BaseSelendroidStandaloneHandler {
                   "This happens if a hardware device was disconnected but a " +
                   "test session was still active on the device."));
     }
-    String url = "http://localhost:" + session.getSelendroidServerPort() + request.uri();
 
-    String method = request.method();
-
+    final String url = "http://localhost:" + session.getSelendroidServerPort() + request.uri();
+    final String method = request.method();
     final AndroidDevice device = session.getDevice();
 
     try {

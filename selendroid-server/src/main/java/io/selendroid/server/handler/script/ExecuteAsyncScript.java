@@ -4,10 +4,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import io.selendroid.common.exceptions.SelendroidException;
+
 import io.selendroid.server.common.Response;
 import io.selendroid.server.common.SelendroidResponse;
 import io.selendroid.server.common.StatusCode;
-import io.selendroid.server.common.exceptions.*;
+// import io.selendroid.server.common.exceptions.*;
+import io.selendroid.server.common.exceptions.UnsupportedOperationException;
 import io.selendroid.server.common.http.HttpRequest;
 import io.selendroid.server.handler.SafeRequestHandler;
 import io.selendroid.server.util.SelendroidLogger;
@@ -26,7 +29,7 @@ public class ExecuteAsyncScript extends SafeRequestHandler {
     Object value = null;
     try {
         value = getSelendroidDriver(request).executeAsyncScript(script, args);
-    } catch (io.selendroid.server.common.exceptions.UnsupportedOperationException e) {
+    } catch (UnsupportedOperationException e) {
       return new SelendroidResponse(getSessionId(request), StatusCode.UNKNOWN_ERROR, e);
     }
     if (value instanceof String) {

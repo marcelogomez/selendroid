@@ -1,17 +1,17 @@
 /*
  * Copyright 2012-2014 eBay Software Foundation and selendroid committers.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License
  * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package io.selendroid.standalone.android;
+package io.selendroid.common.android;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -24,11 +24,9 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import io.selendroid.server.common.exceptions.SelendroidException;
-import io.selendroid.standalone.exceptions.AndroidSdkException;
-
-import static io.selendroid.standalone.android.OS.platformExecutableSuffixBat;
-import static io.selendroid.standalone.android.OS.platformExecutableSuffixExe;
+import io.selendroid.common.OS;
+import io.selendroid.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.AndroidSdkException;
 
 public class AndroidSdk {
   private static final String ANDROID_HOME = "ANDROID_HOME";
@@ -46,13 +44,13 @@ public class AndroidSdk {
   public static File adb() {
     return new File(
       sAdbHome != null ? new File(sAdbHome) : platformToolsHome(),
-      "adb" + platformExecutableSuffixExe());
+      "adb" + OS.platformExecutableSuffixExe());
   }
 
   public static File aapt() throws AndroidSdkException {
     StringBuffer command = new StringBuffer();
     command.append("aapt");
-    command.append(platformExecutableSuffixExe());
+    command.append(OS.platformExecutableSuffixExe());
     File platformToolsAapt = new File(platformToolsHome(), command.toString());
 
     if (platformToolsAapt.isFile()) {
@@ -66,11 +64,11 @@ public class AndroidSdk {
     StringBuffer command = new StringBuffer();
     command.append(toolsHome());
 
-    return new File(toolsHome(), "android" + platformExecutableSuffixBat());
+    return new File(toolsHome(), "android" + OS.platformExecutableSuffixBat());
   }
 
   public static File emulator() {
-    return new File(toolsHome(), "emulator" + platformExecutableSuffixExe());
+    return new File(toolsHome(), "emulator" + OS.platformExecutableSuffixExe());
   }
 
   private static File toolsHome() {
@@ -148,7 +146,7 @@ public class AndroidSdk {
       throw new SelendroidException("No valid Android platform folder found in " + platformsFolder.getName());
     }
 
-    Pattern pattern = Pattern.compile(PLATFORM_VERSION_REGEX);
+    final Pattern pattern = Pattern.compile(PLATFORM_VERSION_REGEX);
     Arrays.sort(
       platformVersions,
       new Comparator<File>() {
@@ -192,7 +190,7 @@ public class AndroidSdk {
       throw new SelendroidException("No valid build-tools versions found in " + buildToolsHome.getName());
     }
 
-    Pattern pattern = Pattern.compile(BUILD_TOOLS_VERSION_REGEX);
+    final Pattern pattern = Pattern.compile(BUILD_TOOLS_VERSION_REGEX);
     Arrays.sort(
       buildToolsVersions,
       new Comparator<File>() {
@@ -238,7 +236,7 @@ public class AndroidSdk {
   }
   public static File avdManager() {
     if (sAvdManager != null) {
-      return new File(sAvdManager + platformExecutableSuffixExe());
+      return new File(sAvdManager + OS.platformExecutableSuffixExe());
     }
     else {
       return android();

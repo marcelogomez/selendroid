@@ -19,7 +19,7 @@ import io.selendroid.server.ServerInstrumentation;
 import io.selendroid.server.android.AndroidTouchScreen;
 import io.selendroid.server.android.InstrumentedMotionSender;
 import io.selendroid.server.android.internal.Dimension;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.server.common.exceptions.UnsupportedOperationException;
 import io.selendroid.server.model.DefaultSelendroidDriver.NativeSearchScope;
 

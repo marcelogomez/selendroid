@@ -15,6 +15,8 @@ package io.selendroid.standalone.builder;
 
 import org.apache.commons.io.IOUtils;
 
+import io.selendroid.server.builder.SelendroidServerBuilder;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

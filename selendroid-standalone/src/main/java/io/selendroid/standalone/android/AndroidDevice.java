@@ -15,9 +15,10 @@ package io.selendroid.standalone.android;
 
 import io.selendroid.standalone.android.InstrumentationProcessListener;
 import io.selendroid.common.SelendroidCapabilities;
+import io.selendroid.common.android.AndroidApp;
 import io.selendroid.common.device.DeviceTargetPlatform;
 import io.selendroid.standalone.exceptions.AndroidDeviceException;
-import io.selendroid.standalone.exceptions.AndroidSdkException;
+import io.selendroid.common.exceptions.AndroidSdkException;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.logging.LogEntry;

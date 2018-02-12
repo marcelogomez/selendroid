@@ -28,7 +28,7 @@ import io.selendroid.server.ServerInstrumentation;
 import io.selendroid.server.android.*;
 import io.selendroid.server.android.internal.Dimension;
 import io.selendroid.server.common.exceptions.NoSuchElementException;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.server.common.utils.CallLogEntry;
 import io.selendroid.server.inspector.TreeUtil;
 import io.selendroid.server.model.internal.AbstractNativeElementContext;

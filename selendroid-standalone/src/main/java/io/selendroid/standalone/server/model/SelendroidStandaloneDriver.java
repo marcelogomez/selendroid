@@ -19,13 +19,13 @@ import io.netty.handler.codec.http.HttpMethod;
 import io.selendroid.common.SelendroidCapabilities;
 import io.selendroid.server.common.ServerDetails;
 import io.selendroid.server.common.exceptions.AppCrashedException;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.server.common.exceptions.SessionNotCreatedException;
 import io.selendroid.standalone.SelendroidConfiguration;
-import io.selendroid.standalone.android.AndroidApp;
+import io.selendroid.common.android.AndroidApp;
 import io.selendroid.standalone.android.AndroidDevice;
 import io.selendroid.standalone.android.AndroidEmulator;
-import io.selendroid.standalone.android.AndroidSdk;
+import io.selendroid.common.android.AndroidSdk;
 import io.selendroid.standalone.android.DeviceManager;
 import io.selendroid.standalone.android.InstrumentationProcessListener;
 import io.selendroid.standalone.android.InstrumentationProcessOutput;
@@ -34,9 +34,9 @@ import io.selendroid.standalone.android.impl.DefaultDeviceManager;
 import io.selendroid.standalone.android.impl.DefaultHardwareDevice;
 import io.selendroid.standalone.android.impl.InstalledAndroidApp;
 import io.selendroid.standalone.builder.AndroidDriverAPKBuilder;
-import io.selendroid.standalone.builder.SelendroidServerBuilder;
+import io.selendroid.server.builder.SelendroidServerBuilder;
 import io.selendroid.standalone.exceptions.AndroidDeviceException;
-import io.selendroid.standalone.exceptions.AndroidSdkException;
+import io.selendroid.common.exceptions.AndroidSdkException;
 import io.selendroid.standalone.server.util.FolderMonitor;
 import io.selendroid.standalone.server.util.HttpClientUtil;
 import io.selendroid.server.common.exceptions.AppCrashedException;
@@ -96,28 +96,7 @@ public class SelendroidStandaloneDriver
       throws AndroidSdkException, AndroidDeviceException {
     this.serverConfiguration = serverConfiguration;
     androidDriverAPKBuilder = new AndroidDriverAPKBuilder();
-
-    selendroidApkBuilder = new SelendroidServerBuilder();
-    if (serverConfiguration != null) {
-      if (serverConfiguration.getKeystore() != null) {
-        selendroidApkBuilder.withKeystorePath(
-          serverConfiguration.getKeystore());
-      }
-
-      if (serverConfiguration.getKeystoreAlias() != null) {
-        selendroidApkBuilder.withKeystoreAlias(
-          serverConfiguration.getKeystoreAlias());
-      }
-
-      if (serverConfiguration.getKeystorePassword() != null) {
-        selendroidApkBuilder.withKeystorePassword(
-          serverConfiguration.getKeystorePassword());
-      }
-
-      selendroidApkBuilder
-        .withDeleteTempFiles(serverConfiguration.isDeleteTmpFiles());
-    }
-
+    selendroidApkBuilder = initSelendroidServerBuilder(serverConfiguration);
     selendroidServerPort = serverConfiguration.getSelendroidServerPort();
 
     if (serverConfiguration.getAppFolderToMonitor() != null) {
@@ -136,6 +115,35 @@ public class SelendroidStandaloneDriver
                              AndroidDriverAPKBuilder androidDriverAPKBuilder) {
     this.deviceManager = deviceManager;
     this.androidDriverAPKBuilder = androidDriverAPKBuilder;
+    this.selendroidApkBuilder = initSelendroidServerBuilder(null);
+  }
+
+  private SelendroidServerBuilder initSelendroidServerBuilder(
+    SelendroidConfiguration serverConfiguration) {
+    if (serverConfiguration == null) {
+      return new SelendroidServerBuilder();
+    }
+
+    final SelendroidServerBuilder builder = new SelendroidServerBuilder();
+    if (serverConfiguration.getKeystore() != null) {
+      builder.withKeystorePath(
+        serverConfiguration.getKeystore());
+    }
+
+    if (serverConfiguration.getKeystoreAlias() != null) {
+      builder.withKeystoreAlias(
+        serverConfiguration.getKeystoreAlias());
+    }
+
+    if (serverConfiguration.getKeystorePassword() != null) {
+      builder.withKeystorePassword(
+        serverConfiguration.getKeystorePassword());
+    }
+
+    builder
+      .withDeleteTempFiles(serverConfiguration.isDeleteTmpFiles());
+
+    return builder;
   }
 
   /**
@@ -198,6 +206,9 @@ public class SelendroidStandaloneDriver
         File androidAPK = androidDriverAPKBuilder.extractAndroidDriverAPK();
         if(serverConfiguration != null && serverConfiguration.isDeleteTmpFiles()) {
           androidAPK.deleteOnExit(); //Deletes temporary files if flag set
+        }
+        if (selendroidApkBuilder == null) {
+          throw new Exception("Bullshit");
         }
         AndroidApp app = selendroidApkBuilder.resignApk(androidAPK);
         appsStore.put(BrowserType.ANDROID, app);

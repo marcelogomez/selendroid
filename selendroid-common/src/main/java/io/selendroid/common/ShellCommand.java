@@ -11,10 +11,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package io.selendroid.standalone.io;
+package io.selendroid.common;
 
-import io.selendroid.standalone.exceptions.DeviceOfflineException;
-import io.selendroid.standalone.exceptions.ShellCommandException;
+import io.selendroid.common.exceptions.DeviceOfflineException;
+import io.selendroid.common.exceptions.ShellCommandException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
@@ -82,9 +82,9 @@ public class ShellCommand {
   }
 
   public static void execAsync(
-    String display,
-    CommandLine commandLine,
-    Listener listener) throws ShellCommandException {
+    final String display,
+    final CommandLine commandLine,
+    final Listener listener) throws ShellCommandException {
     final OutputStream os = new ByteArrayOutputStream();
     try {
       DefaultExecutor exec = new DefaultExecutor();

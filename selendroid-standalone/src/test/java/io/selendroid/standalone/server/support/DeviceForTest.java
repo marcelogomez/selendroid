@@ -18,10 +18,10 @@ import com.android.ddmlib.IDevice;
 import io.netty.handler.codec.http.HttpMethod;
 import io.selendroid.common.SelendroidCapabilities;
 import io.selendroid.common.device.DeviceTargetPlatform;
-import io.selendroid.standalone.android.AndroidApp;
+import io.selendroid.common.android.AndroidApp;
 import io.selendroid.standalone.android.impl.DefaultAndroidEmulator;
 import io.selendroid.standalone.exceptions.AndroidDeviceException;
-import io.selendroid.standalone.exceptions.AndroidSdkException;
+import io.selendroid.common.exceptions.AndroidSdkException;
 import io.selendroid.standalone.server.util.HttpClientUtil;
 
 import org.apache.http.HttpResponse;

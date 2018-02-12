@@ -3,6 +3,7 @@ apply plugin: 'application'
 
 dependencies {
     compile project(':selendroid-common')
+    compile project(':selendroid-server-builder')
     compile project(':selendroid-server-common')
     compile 'org.apache.httpcomponents:httpclient:4.3.4'
     compile rootProject.ext.json
@@ -57,7 +58,6 @@ jar {
     }
     from {
         ['./AndroidManifestTemplate.xml',
-         './BetterAndroidManifestTemplate.xml',
          '../README.md']
     }
 }
@@ -87,7 +87,6 @@ task jarWithoutDependencies(type: Jar) {
   from sourceSets.main.output
   from {
       ['./AndroidManifestTemplate.xml',
-       './BetterAndroidManifestTemplate.xml',
        '../README.md']
   }
 }

@@ -23,7 +23,7 @@ import org.json.JSONException;
 
 import io.selendroid.server.common.Response;
 import io.selendroid.server.common.UiResponse;
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.server.common.http.HttpRequest;
 import io.selendroid.standalone.server.JsResult;
 import io.selendroid.standalone.server.model.ActiveSession;

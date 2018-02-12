@@ -13,7 +13,7 @@
  */
 package io.selendroid.server.inspector;
 
-import io.selendroid.server.common.exceptions.SelendroidException;
+import io.selendroid.common.exceptions.SelendroidException;
 import io.selendroid.server.model.internal.JsonXmlUtil;
 
 import java.io.StringWriter;
